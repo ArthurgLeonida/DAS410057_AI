@@ -69,5 +69,3 @@ Executa os 7 algoritmos (BFS, DFS, UCS, Greedy h1, Greedy h2, A\* h1, A\* h2) no
 | 2 | 30 | UCS, A\* | BFS e Greedy h2 falharam (limite de 500k nos) |
 | 3 | 37 | UCS, A\* | Apenas UCS, A\* e Greedy encontraram solucao |
 | 4 | ? | Greedy h1 (custo 64) | Unico algoritmo a encontrar solucao |
-
-O relatorio completo esta disponivel em [`Trabalho1_Relatorio/`](../Trabalho1_Relatorio/).
