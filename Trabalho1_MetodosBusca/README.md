@@ -63,9 +63,25 @@ Executa os 7 algoritmos (BFS, DFS, UCS, Greedy h1, Greedy h2, A\* h1, A\* h2) no
 
 ## Resultados Resumidos
 
+Limite padrao: 500.000 nos. O Problema 4 foi testado adicionalmente com limite de 3.000.000 nos.
+
 | Problema | Custo Otimo | Melhor Algoritmo | Observacao |
 |----------|-------------|------------------|------------|
 | 1 | 18 | BFS, UCS, Greedy h1, A\* | Todos os otimos concordam |
 | 2 | 30 | UCS, A\* | BFS e Greedy h2 falharam (limite de 500k nos) |
 | 3 | 37 | UCS, A\* | Apenas UCS, A\* e Greedy encontraram solucao |
-| 4 | ? | Greedy h1 (custo 64) | Unico algoritmo a encontrar solucao |
+| 4 | 61 | A\* h1 (limite estendido) | Greedy h1 encontra custo 64 (5% acima do otimo) |
+
+### Problema 4: A\* com limite estendido
+
+Com o limite padrao de 500k nos, apenas a Busca Gulosa com h1 encontrava solucao (custo 64). Ao estender o limite para 3M nos, o A\* com h1 encontrou a solucao otima:
+
+| Algoritmo | Custo | Nos explorados | Nos gerados | Fronteira max | Tempo |
+|-----------|-------|----------------|-------------|---------------|-------|
+| Greedy h1 | 64 | 77 | 374 | 288 | 0,01s |
+| A\* h1 | **61** | 826.571 | 4.964.009 | 1.125.573 | 145,5s |
+| A\* h2 | N/A | >3.000.000 | - | - | - |
+
+O plano otimo do A\* utiliza a **bandeja** para transportar duas bebidas simultaneamente, reduzindo viagens ao bar. A Busca Gulosa entrega todas individualmente, resultando em custo maior apesar de ambos os planos terem exatamente 45 acoes.
+
+A h2 nao encontrou solucao mesmo com 3M nos porque suas estimativas mais baixas (operador max vs. soma) fazem o A\* expandir muito mais nos antes de provar otimalidade.
