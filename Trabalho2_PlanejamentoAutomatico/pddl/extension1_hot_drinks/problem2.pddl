@@ -29,6 +29,7 @@
          (= (clean-time mesa3) 8) (= (clean-time mesa4) 4)
          (pending o1) (pending o2) (pending o3) (pending o4)
          (cold o1) (cold o2) (hot o3) (hot o4)
+         (window-unused o3) (window-unused o4)
          (for-table o1 mesa3) (for-table o2 mesa3)
          (for-table o3 mesa3) (for-table o4 mesa3)
          (dirty mesa1))

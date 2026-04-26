@@ -31,6 +31,7 @@
          (pending o5) (pending o6) (pending o7) (pending o8)
          (cold o1) (cold o2) (cold o3) (cold o4)
          (hot o5) (hot o6) (hot o7) (hot o8)
+         (window-unused o5) (window-unused o6) (window-unused o7) (window-unused o8)
          (for-table o1 mesa4) (for-table o2 mesa4)
          (for-table o3 mesa1) (for-table o4 mesa1)
          (for-table o5 mesa3) (for-table o6 mesa3)

@@ -14,8 +14,8 @@
              (tray-at-bar)
              (pending ?o - order)
              (ready ?o - order)
-             (just-ready ?o - order)
              (valid ?o - order)
+             (window-unused ?o - order)
              (carried-hand ?w - waiter ?o - order)
              (carried-tray ?w - waiter ?o - order)
              (served ?o - order)
@@ -32,10 +32,11 @@
             - number)
 
 ; Extensao 1: bebida quente esfria em 4 u.t. = 8 unidades PDDL.
-; prepare-hot marca (just-ready ?o). A acao hot-window (duracao <= 8)
-; consome essa marca e mantem (valid ?o) viva durante a janela.
-; load-* e serve-* exigem (valid ?o), logo a bebida so pode ser entregue
-; dentro da janela. prepare-cold libera (valid ?o) direto.
+; Para manter o mesmo estilo dos exemplos temporais da disciplina, a
+; janela da bebida quente e uma acao durativa auxiliar aberta antes do
+; preparo: 10 unidades de preparo + 8 unidades de validade = duracao
+; maxima 18. prepare-hot exige que a janela esteja ativa, e load/serve
+; exigem (valid ?o).
 
 (:durative-action prepare-cold
   :parameters (?o - order)
@@ -47,15 +48,17 @@
 (:durative-action prepare-hot
   :parameters (?o - order)
   :duration (= ?duration 10)
-  :condition (and (at start (barista-free)) (at start (pending ?o)) (at start (hot ?o)))
+  :condition (and (at start (barista-free)) (at start (pending ?o))
+                  (at start (hot ?o)) (at start (valid ?o))
+                  (over all (valid ?o)))
   :effect (and (at start (not (barista-free))) (at start (not (pending ?o)))
-               (at end (barista-free)) (at end (ready ?o)) (at end (just-ready ?o))))
+               (at end (barista-free)) (at end (ready ?o))))
 
 (:durative-action hot-window
   :parameters (?o - order)
-  :duration (<= ?duration 8)
-  :condition (at start (just-ready ?o))
-  :effect (and (at start (not (just-ready ?o))) (at start (valid ?o))
+  :duration (<= ?duration 18)
+  :condition (and (at start (hot ?o)) (at start (window-unused ?o)))
+  :effect (and (at start (not (window-unused ?o))) (at start (valid ?o))
                (at end (not (valid ?o)))))
 
 (:durative-action move-empty
@@ -116,7 +119,7 @@
   :parameters (?w - waiter ?o - order ?t - table)
   :duration (= ?duration 1)
   :condition (and (over all (at ?w ?t)) (at start (carried-hand ?w ?o))
-                  (at start (valid ?o)) (at start (for-table ?o ?t)))
+                  (over all (valid ?o)) (at start (for-table ?o ?t)))
   :effect (and (at start (not (carried-hand ?w ?o))) (at end (served ?o))
                (at end (hand-free ?w))))
 
@@ -124,7 +127,7 @@
   :parameters (?w - waiter ?o - order ?t - table)
   :duration (= ?duration 1)
   :condition (and (over all (at ?w ?t)) (at start (carried-tray ?w ?o))
-                  (at start (valid ?o)) (at start (for-table ?o ?t)))
+                  (over all (valid ?o)) (at start (for-table ?o ?t)))
   :effect (and (at start (not (carried-tray ?w ?o))) (at end (served ?o))
                (at start (decrease (tray-load ?w) 1))))
 
