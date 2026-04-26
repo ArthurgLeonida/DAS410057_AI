@@ -13,3 +13,4 @@ Repositorio dos trabalhos praticos da disciplina **DAS410057 - Inteligencia Arti
 | # | Titulo | Descricao |
 |---|--------|-----------|
 | 1 | [Metodos de Busca](Trabalho1_MetodosBusca/) | Busca em espaco de estados aplicada a uma cafeteria robotica |
+| 2 | [Planejamento Automatico](Trabalho2_PlanejamentoAutomatico/) | Modelagem em PDDL/PDDL+ da mesma cafeteria, preparada para uso com solvers padrao |
