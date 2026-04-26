@@ -34,8 +34,8 @@
 
 ; Extensao 2: dois garcons.
 ; - (bar-free) e um semaforo: cada acao no balcao toma e devolve esse recurso;
-; - (unassigned ?t) + (assigned ?w ?t) + claim-table impedem que duas atendentes
-;   sirvam ou limpem a mesma mesa.
+; - (unassigned ?t) + (assigned ?w ?t) + claim-table garantem que cada
+;   mesa tenha um unico garcom responsavel por servir e limpar.
 
 (:durative-action prepare-cold
   :parameters (?o - order)
